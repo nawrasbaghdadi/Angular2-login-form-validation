@@ -1,0 +1,38 @@
+<div [hidden]="submitted">
+	<div class="container"><br/><br/>
+		<form (ngSubmit)="onSubmit()" #loginForm="ngForm"> 
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" required 
+					[(ngModel)]="model.email" name="email" #email="ngModel"  placeholder="email"  
+					pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
+				<small [hidden]="email.valid || email.pristine " class="text-danger">
+        			Email is required and format should be <i>john@doe.com</i>.
+      			</small>
+      		</div>
+
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" required [(ngModel)]="model.password" name="password" #password="ngModel" placeholder="password" 
+				minlength="8" maxlength="24">
+				<div *ngIf="password.errors && (password.dirty || password.touched)">
+					<small [hidden]="email.valid"  class="text-danger">
+  			 			Password is required.
+					</small>
+			 		<small [hidden]="!password.errors.minlength"  class="text-danger">
+      					Password must be at least 8 characters long.
+    				</small>
+    				<small [hidden]="!password.errors.maxlength"  class="text-danger">
+      					Password must be at least 24 characters long.
+    				</small>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-default" [disabled]="!loginForm.form.valid">Submit</button>
+		</form>
+	</div>
+</div>	
+<div [hidden]="!submitted">
+  <div id="snackbar">Login Successful .. Welcome Back</div>
+  
+</div>
+
